@@ -1,0 +1,80 @@
+\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(async function(data){
+
+    const response = await fetch("./data.json");
+    const data = await response.json();
+    
+
+
+
+
+
+
+    (document).ready(function(){
+        $('.input-group input[type="text"]').on("keyup input", function(){
+            /* Get input value on change */
+            var inputVal = $(this).val();
+            var resultDropdown = $(this).siblings(".suggestresult");
+            if(inputVal.length){
+                $.get("includes/autosuggest.php", {term: inputVal,type:'movies'}).done(function(data){
+                    // Display the returned data in browser
+                    resultDropdown.html(data);
+                });
+            } else{
+                resultDropdown.empty();
+            }
+        });
+        
+        // Set search input value on click of suggest result item
+        $(document).on("click", ".suggestresult p", function(){
+            $(this).parents(".input-group").find('input[type="text"]').val($(this).text());
+            $(this).parent(".suggestresult").empty();
+        });
+    });
+})
